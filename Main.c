@@ -1,3 +1,4 @@
+/* main.c */
 #include <stdio.h>
 #include <stdlib.h>
 #include "Mapa.h"
@@ -7,7 +8,10 @@ int main() {
     Mundo m;
     int x, y;
 
-    lerArquivo(&m, &x, &y);
+    lerArquivo(&m, &x, &y);                // primeiro leia o mapa e obtenha x,y
+
+    x_inicio_global = x;                   // agora atribua às globais
+    y_inicio_global = y;
 
     printf("Deseja ativar o modo visual (1=sim, 0=nao)? ");
     scanf("%d", &MODO_VISUAL);

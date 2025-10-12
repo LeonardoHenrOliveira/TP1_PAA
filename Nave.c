@@ -5,17 +5,23 @@
 int chamadas_recursivas = 0;
 int max_nivel_recursao = 0;
 int achou_destino = 0;
+int x_inicio_global = -1;
+int y_inicio_global = -1;
+int voltando = 0; // indica se a nave está voltando
 
 int movimentos[4][2] = { {-1,0}, {1,0}, {0,-1}, {0,1} };
 
-// Verifica se pode mover
 int podeMover(char atual, char prox, int dir) {
-    if (prox == '.' || prox == '\0') return 0;
-    if (prox == 'P' || prox == 'F' || prox == '+') return 1;
-    if (prox == '-' && (dir == 2 || dir == 3)) return 1;
-    if (prox == '|' && (dir == 0 || dir == 1)) return 1;
+    if (prox == '\0' || prox == '.') return 0; // parede
+    if (prox == 'P' || prox == 'F' || prox == 'X') return 1;
+    if (prox == '+') return 1;                  // cruzamento
+    if (prox == '-' && (dir == 2 || dir == 3)) return 1; // horizontal
+    if (prox == '|' && (dir == 0 || dir == 1)) return 1; // vertical
     return 0;
 }
+
+
+
 
 // Função recursiva principal
 void movimentar(Mundo *m, int l, int c, int dur, int nivel) {
@@ -30,14 +36,25 @@ void movimentar(Mundo *m, int l, int c, int dur, int nivel) {
     printf("Linha: %d, Coluna: %d; D: %d, peças restantes: %d\n",
            l+1, c+1, dur, pecas_restantes);
 
-    if (atual == 'F') {
+    if (atual == 'F' && !voltando) {
         achou_destino = 1;
-        if (pecas_restantes == 0)
-            printf("\nA jornada será finalizada sem mais desafios.\n");
-        else
-            printf("\nA tripulação finalizou sua jornada.\n");
+        printf("\nA tripulação chegou ao destino final!\n");
+
+        // Agora começa o retorno
+        voltando = 1;
+        achou_destino = 0;
+        printf("\nIniciando retorno ao ponto de partida...\n");
+        movimentar(m, l, c, m->D, nivel + 1);
         return;
     }
+
+    if (voltando && atual == 'X') {
+        achou_destino = 1;
+        printf("\nA nave retornou com sucesso ao ponto de partida!\n");
+        return;
+    }
+
+
 
     m->visitado[l][c] = 1;
 

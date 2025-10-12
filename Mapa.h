@@ -9,11 +9,11 @@ typedef struct {
     int **coletada;
 } Mundo;
 
-void lerArquivo(Mundo *m, int *x_inicio, int *y_inicio);
-void mostrarMapa(Mundo *m, int atualL, int atualC);
-int contarPecasRestantes(Mundo *m);
-void liberarMapa(Mundo *m);
-
 extern int MODO_VISUAL;
+
+int contarPecasRestantes(Mundo *m);
+void mostrarMapa(Mundo *m, int atualL, int atualC);
+void lerArquivo(Mundo *m, int *x_inicio, int *y_inicio);
+void liberarMapa(Mundo *m);
 
 #endif

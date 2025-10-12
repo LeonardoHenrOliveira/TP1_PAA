@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "Mapa.h"
-
+#include "Nave.h"
 int MODO_VISUAL = 1; // 1 = modo visual, 0 = modo silencioso
 
 // Conta quantas peças ainda faltam
@@ -23,8 +23,13 @@ void mostrarMapa(Mundo *m, int atualL, int atualC) {
     printf("\n===== MAPA ATUAL =====\n");
     for (int i = 0; i < m->linhas; i++) {
         for (int j = 0; j < m->colunas; j++) {
-            if (i == atualL && j == atualC)
-                printf("\033[1;32mX\033[0m");
+            if (i == atualL && j == atualC) {
+                if (voltando)
+                    printf("\033[1;33mV\033[0m"); // V de volta
+                else
+                    printf("\033[1;32mX\033[0m");
+            }
+
             else if (m->visitado[i][j])
                 printf("\033[1;34m%c\033[0m", m->mapa[i][j]);
             else

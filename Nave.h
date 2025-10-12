@@ -10,4 +10,9 @@ extern int chamadas_recursivas;
 extern int max_nivel_recursao;
 extern int achou_destino;
 
+
+extern int x_inicio_global;
+extern int y_inicio_global;
+extern int voltando;
+
 #endif
