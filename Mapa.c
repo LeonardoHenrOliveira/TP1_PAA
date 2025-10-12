@@ -1,22 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>   // necessário para usleep()
+#include <unistd.h>
 #include "Mapa.h"
 
 int MODO_VISUAL = 1; // 1 = modo visual, 0 = modo silencioso
 
-// Conta quantas peças ainda faltam
-int contarPecasRestantes(Mundo *m) {
-    int faltam = 4;
-    for (int i = 0; i < m->linhas; i++)
-        for (int j = 0; j < m->colunas; j++)
-            if (m->mapa[i][j] == 'P' && m->coletada[i][j] == 0)
-                faltam--;
-    if (faltam < 0) faltam = 0;
-    return faltam;
-}
-
-// Mostra o mapa na tela
 void mostrarMapa(Mundo *m, int atualL, int atualC) {
     if (!MODO_VISUAL) return;
 
@@ -36,7 +24,6 @@ void mostrarMapa(Mundo *m, int atualL, int atualC) {
     usleep(300000); // 0,3s de delay
 }
 
-// Lê o arquivo de entrada
 void lerArquivo(Mundo *m, int *x_inicio, int *y_inicio) {
     FILE *arq = fopen("entrada.txt", "r");
     if (!arq) {
@@ -55,16 +42,16 @@ void lerArquivo(Mundo *m, int *x_inicio, int *y_inicio) {
         m->visitado[i] = calloc(m->colunas, sizeof(int));
         m->coletada[i] = calloc(m->colunas, sizeof(int));
         fscanf(arq, "%s", m->mapa[i]);
-        for (int j = 0; j < m->colunas; j++)
+        for (int j = 0; j < m->colunas; j++) {
             if (m->mapa[i][j] == 'X') {
                 *x_inicio = i;
                 *y_inicio = j;
             }
+        }
     }
     fclose(arq);
 }
 
-// Libera memória do mapa
 void liberarMapa(Mundo *m) {
     for (int i = 0; i < m->linhas; i++) {
         free(m->mapa[i]);
