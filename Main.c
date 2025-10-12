@@ -1,25 +1,25 @@
-#include "Leitura_Arquivo.h"
-#include "Entradas_Extras/Gerar_Testes.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "Mapa.h"
+#include "Nave.h"
 
 int main() {
-    char nome_arquivo[256];
+    Mundo m;
+    int x, y;
 
-    printf("Digite o nome do arquivo de entrada: ");
-    if (scanf("%255s", nome_arquivo) != 1) {
-        printf("Entrada invalida.\n");
-        return 1;
-    }
+    lerArquivo(&m, &x, &y);
 
-    // Gera um mapa de teste
-    //gerar_mapa_teste("../Entradas/mapa_teste.txt",
-    //                  20, 5, 10,   // D, D’, A
-    //                  7, 10,       // altura, largura
-    //                  4);          // número de peças
+    printf("Deseja ativar o modo visual (1=sim, 0=nao)? ");
+    scanf("%d", &MODO_VISUAL);
 
-    Mapa *m = mapa_ler_de_arquivo(nome_arquivo);
+    movimentar(&m, x, y, m.D, 1);
 
-    mapa_imprimir_relatorio(m);
+    if (!achou_destino)
+        printf("\nApesar da bravura, a tripulação falhou em sua jornada.\n");
 
-    mapa_liberar(m);
+    printf("\nChamadas recursivas: %d\n", chamadas_recursivas);
+    printf("Nível máximo de recursão: %d\n", max_nivel_recursao);
+
+    liberarMapa(&m);
     return 0;
 }
