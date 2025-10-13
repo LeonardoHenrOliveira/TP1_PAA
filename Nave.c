@@ -87,6 +87,7 @@ void movimentar(Mundo *m, int l, int c, int dur, int nivel, int pecas_restantes)
             if (!m->visitado[nl][nc] && podeMover(m->mapa[l][c], prox, i)) {
                 int novo_dur = dur;
                 if (pecas_restantes > 0) novo_dur -= m->Dp;
+                printf("Tentando mover de (%d,%d) para (%d,%d)\n", l+1, c+1, nl+1, nc+1);
 
                 movimentar(m, nl, nc, novo_dur, nivel+1, pecas_restantes);
 
