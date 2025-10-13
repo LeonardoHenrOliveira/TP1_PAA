@@ -2,21 +2,17 @@
 #define MAPA_H
 
 typedef struct {
-    int D;          // durabilidade inicial
-    int Dp;         // decremento por movimento
-    int A;          // incremento por peça coletada
-    int linhas;
-    int colunas;
-    char **mapa;    // matriz do mapa
-    int **visitado; // matriz de visitados
-    int **coletada; // matriz de peças coletadas
+    int linhas, colunas;
+    int D;  // Durabilidade inicial
+    int Dp; // Durabilidade consumida por movimento
+    int A;  // Durabilidade aumentada ao coletar peça
+    char **mapa;
+    int **visitado;
+    int **coletada;
 } Mundo;
 
-// modo visual
 extern int MODO_VISUAL;
 
-// funções de mapa
-int contarPecasRestantes(Mundo *m);
 void mostrarMapa(Mundo *m, int atualL, int atualC);
 void lerArquivo(Mundo *m, int *x_inicio, int *y_inicio);
 void liberarMapa(Mundo *m);
