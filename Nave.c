@@ -10,12 +10,26 @@ int movimentos[4][2] = { {-1,0}, {1,0}, {0,-1}, {0,1} };
 
 int podeMover(char atual, char prox, int dir) {
     if (prox == '.' || prox == '\0') return 0;
-    if (prox == 'P' || prox == 'F' || prox == '+') return 1;
-    if (prox == '-' && (dir == 2 || dir == 3)) return 1;
-    if (prox == '|' && (dir == 0 || dir == 1)) return 1;
-    return 0;
-}
 
+    int eh_horizontal = (dir == 2 || dir == 3); // esquerda, direita
+    int eh_vertical   = (dir == 0 || dir == 1); // cima, baixo
+
+    int saida_valida = 0;
+    if (atual == '-' && eh_horizontal) saida_valida = 1;
+    else if (atual == '|' && eh_vertical) saida_valida = 1;
+    else if (atual == '+' || atual == 'P' || atual == 'F' || atual == 'X')
+        saida_valida = 1;
+
+    if (!saida_valida) return 0;
+
+    int entrada_valida = 0;
+    if (prox == '-') entrada_valida = eh_horizontal;
+    else if (prox == '|') entrada_valida = eh_vertical;
+    else if (prox == '+' || prox == 'P' || prox == 'F')
+        entrada_valida = 1;
+
+    return entrada_valida;
+}
 void movimentar(Mundo *m, int l, int c, int dur, int nivel, int pecas_restantes) {
     chamadas_recursivas++;
     if (nivel > max_nivel_recursao) max_nivel_recursao = nivel;
@@ -44,7 +58,12 @@ void movimentar(Mundo *m, int l, int c, int dur, int nivel, int pecas_restantes)
         return;
     }
 
-    if (dur <= 0) return;
+    // 🚨 ENCERRAR SE ACABAR A ENERGIA
+    if (dur <= 0) {
+        printf("\nA nave ficou sem energia antes de concluir sua jornada.\n");
+        achou_destino = 1; // impede mais chamadas recursivas
+        return;
+    }
 
     for (int i = 0; i < 4; i++) {
         int nl = l + movimentos[i][0];
@@ -62,4 +81,21 @@ void movimentar(Mundo *m, int l, int c, int dur, int nivel, int pecas_restantes)
     }
 
     m->visitado[l][c] = 0; // backtracking
+}
+
+// --- Função principal para iniciar o processo ---
+void iniciarJornada(Mundo *m, int inicioL, int inicioC) {
+    chamadas_recursivas = 0;
+    max_nivel_recursao = 0;
+    achou_destino = 0;
+
+    int pecas_iniciais = 4; // sempre começa com 4 peças a coletar
+    movimentar(m, inicioL, inicioC, m->D, 1, pecas_iniciais);
+
+    if (!achou_destino) {
+        printf("\nApesar da bravura, a tripulação falhou em sua jornada.\n");
+    }
+
+    printf("\nChamadas recursivas: %d\n", chamadas_recursivas);
+    printf("Nível máximo de recursão: %d\n", max_nivel_recursao);
 }

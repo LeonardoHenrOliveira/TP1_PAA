@@ -11,17 +11,8 @@ int main() {
     printf("Deseja ativar o modo visual (1=sim, 0=nao)? ");
     scanf("%d", &MODO_VISUAL);
 
-    chamadas_recursivas = 0;
-    max_nivel_recursao = 0;
-    achou_destino = 0;
-
-    movimentar(&m, x_inicio, y_inicio, m.D, 1, 4); // sempre 4 peças necessárias
-
-    if (!achou_destino)
-        printf("\nApesar da bravura, a tripulação falhou em sua jornada.\n");
-
-    printf("\nChamadas recursivas: %d\n", chamadas_recursivas);
-    printf("Nível máximo de recursão: %d\n", max_nivel_recursao);
+    // Chama a jornada completa (controla recursão, peças e fim automático)
+    iniciarJornada(&m, x_inicio, y_inicio);
 
     liberarMapa(&m);
     return 0;
