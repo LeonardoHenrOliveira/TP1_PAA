@@ -9,5 +9,6 @@ extern int achou_destino;
 
 void movimentar(Mundo *m, int l, int c, int dur, int nivel, int pecas_restantes);
 void iniciarJornada(Mundo *m, int inicioL, int inicioC);
+int podeMover(char atual, char prox, int dir);
 
 #endif
