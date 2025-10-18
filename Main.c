@@ -1,25 +1,24 @@
-#include "Leitura_Arquivo.h"
-#include "Entradas_Extras/Gerar_Testes.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "Mapa.h"
+#include "Nave.h"
 
 int main() {
-    char nome_arquivo[256];
+    Mundo m;
+    int x_inicio, y_inicio;
 
-    printf("Digite o nome do arquivo de entrada: ");
-    if (scanf("%255s", nome_arquivo) != 1) {
-        printf("Entrada invalida.\n");
-        return 1;
-    }
+    // Ler mapa e parâmetros do arquivo
+    lerArquivo(&m, &x_inicio, &y_inicio);
 
-    // Gera um mapa de teste
-    //gerar_mapa_teste("../Entradas/mapa_teste.txt",
-    //                  20, 5, 10,   // D, D’, A
-    //                  7, 10,       // altura, largura
-    //                  4);          // número de peças
+    // Escolher modo visual
+    printf("Deseja ativar o modo visual (1 = sim, 0 = nao)? ");
+    scanf("%d", &MODO_VISUAL);
 
-    Mapa *m = mapa_ler_de_arquivo(nome_arquivo);
+    // Iniciar jornada a partir do ponto inicial marcado com 'X'
+    iniciarJornada(&m, x_inicio, y_inicio);
 
-    mapa_imprimir_relatorio(m);
+    // Liberar memória
+    liberarMapa(&m);
 
-    mapa_liberar(m);
     return 0;
 }
