@@ -138,6 +138,3 @@ void mapa_imprimir_relatorio(const Mapa *m) {
         printf("Posicao inicial X: NAO encontrada no mapa.\n");
     printf("Total de pecas P no mapa: %d\n", m->total_p);
 }
-
-
-

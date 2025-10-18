@@ -69,4 +69,3 @@ void gerar_mapa_teste(const char *caminho_arquivo,
 
     printf("Mapa gerado com sucesso ");
 }
-
