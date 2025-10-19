@@ -6,19 +6,31 @@
 int main() {
     Mundo m;
     int x_inicio, y_inicio;
+    char nomeArquivo[100];
+    int continuar = 1;
 
-    // Ler mapa e parâmetros do arquivo
-    lerArquivo(&m, &x_inicio, &y_inicio);
+    printf("==== PROJETO E ANALISE DE ALGORITMOS - TRABALHO 1 ====\n");
 
-    // Escolher modo visual
-    printf("Deseja ativar o modo visual (1 = sim, 0 = nao)? ");
-    scanf("%d", &MODO_VISUAL);
+    while (continuar) {
+        printf("\nDigite o nome do arquivo de entrada: ");
+        scanf("%s", nomeArquivo);
 
-    // Iniciar jornada a partir do ponto inicial marcado com 'X'
-    iniciarJornada(&m, x_inicio, y_inicio);
+        lerArquivo(&m, &x_inicio, &y_inicio, nomeArquivo);
 
-    // Liberar memória
-    liberarMapa(&m);
+        printf("Deseja ativar o modo visual (1 = sim, 0 = nao)? ");
+        scanf("%d", &MODO_VISUAL);
 
+        printf("Deseja ativar o modo de análise (1 = sim, 0 = nao)? ");
+        scanf("%d", &MODO_ANALISE);
+
+        iniciarJornada(&m, x_inicio, y_inicio);
+
+        liberarMapa(&m);
+
+        printf("\nDeseja executar outro teste? (1 = sim, 0 = nao): ");
+        scanf("%d", &continuar);
+    }
+
+    printf("\nPrograma encerrado.\n");
     return 0;
 }

@@ -12,9 +12,10 @@ typedef struct {
 } Mundo;
 
 extern int MODO_VISUAL;
+extern int MODO_ANALISE;
 
 void mostrarMapa(Mundo *m, int atualL, int atualC);
-void lerArquivo(Mundo *m, int *x_inicio, int *y_inicio);
+void lerArquivo(Mundo *m, int *x_inicio, int *y_inicio, const char *nomeArquivo);
 void liberarMapa(Mundo *m);
 
 #endif

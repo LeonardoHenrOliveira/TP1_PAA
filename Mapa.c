@@ -3,7 +3,8 @@
 #include <unistd.h>
 #include "Mapa.h"
 
-int MODO_VISUAL = 1; // 1 = modo visual, 0 = modo silencioso
+int MODO_VISUAL = 1; 
+int MODO_ANALISE = 1; 
 
 void mostrarMapa(Mundo *m, int atualL, int atualC) {
     if (!MODO_VISUAL) return;
@@ -13,6 +14,8 @@ void mostrarMapa(Mundo *m, int atualL, int atualC) {
         for (int j = 0; j < m->colunas; j++) {
             if (i == atualL && j == atualC)
                 printf("\033[1;32mX\033[0m");
+            else if (m->mapa[i][j] == 'B')
+                printf("\033[1;31mB\033[0m"); 
             else if (m->visitado[i][j])
                 printf("\033[1;34m%c\033[0m", m->mapa[i][j]);
             else
@@ -21,13 +24,13 @@ void mostrarMapa(Mundo *m, int atualL, int atualC) {
         printf("\n");
     }
     printf("=======================\n");
-    usleep(300000); // 0,3s de delay
+    usleep(300000);
 }
 
-void lerArquivo(Mundo *m, int *x_inicio, int *y_inicio) {
-    FILE *arq = fopen("entrada.txt", "r");
+void lerArquivo(Mundo *m, int *x_inicio, int *y_inicio, const char *nomeArquivo) {
+    FILE *arq = fopen(nomeArquivo, "r");
     if (!arq) {
-        printf("Erro ao abrir o arquivo!\n");
+        printf("Erro ao abrir o arquivo %s!\n", nomeArquivo);
         exit(1);
     }
 
