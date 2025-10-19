@@ -1,14 +1,5 @@
-CC=gcc
-CFLAGS=-Wall -Wextra -g
-SRC=$(wildcard *.c)
-OBJ=$(SRC:.c=.o)
-TARGET=app.exe
+compile:
+	gcc Main.c Mapa.c Nave.c Entradas_Extras/Gerar_Testes.c -o app
 
-$(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ)
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-clean:
-	del /Q $(OBJ) $(TARGET)
+run:
+	./app
